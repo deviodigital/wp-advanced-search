@@ -1,8 +1,9 @@
 <?php
 namespace WPAS;
+
 use WPAS\Enum\FieldType;
 use WPAS\Enum\InputFormat;
-require_once(dirname(__DIR__) . '/wpas.php');
+require_once( dirname( __DIR__ ) . '/wpas.php' );
 
 class TestInputBuilder extends \WP_UnitTestCase {
 
@@ -13,17 +14,21 @@ class TestInputBuilder extends \WP_UnitTestCase {
     }
 
     public function testCanBuildSearch() {
-        $args = array('field_type' => 'search',
-                        'label' => 'Search',
-                        'id' => 'search-id',
-                        'format' => 'text',
-                        'class' => array('testclass'),
-                        'name' => 'my_search',
-                        'attributes' => array('data-src' => 12345,
-                                              'data-color' => 'red',
-                                              'min' => 0,
-                                              'max' => 100),
-                        'default' => 'something');
+        $args = array(
+          'field_type' => 'search',
+          'label'      => 'Search',
+          'id'         => 'search-id',
+          'format'     => 'text',
+          'class'      => array( 'testclass' ),
+          'name'       => 'my_search',
+          'attributes' => array(
+              'data-src'   => 12345,
+              'data-color' => 'red',
+              'min'        => 0,
+              'max'        => 100,
+          ),
+          'default'    => 'something',
+        );
 
         $input = InputBuilder::make('search_query', FieldType::search, $args);
         $this->assertTrue($input instanceof Input);
