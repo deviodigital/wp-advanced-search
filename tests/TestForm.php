@@ -1,6 +1,7 @@
 <?php
 namespace WPAS;
-require_once(dirname(__DIR__) . '/wpas.php');
+
+require_once( dirname(__DIR__) . '/wpas.php' );
 
 class TestForm extends \PHPUnit_Framework_TestCase {
 
@@ -8,16 +9,17 @@ class TestForm extends \PHPUnit_Framework_TestCase {
         $args = array(
             'action' => 'http://google.com',
             'method' => 'GET',
-            'id' => 'my_id',
-            'name' => 'some_name',
-            'class' => array('form-class') );
+            'id'     => 'my_id',
+            'name'   => 'some_name',
+            'class'  => array( 'form-class' ),
+        );
 
-        $form = new Form("default", $args);
+        $form = new Form( "default", $args );
         $attr = $form->getAttributes();
-        $this->assertEquals($attr['action'], 'http://google.com');
-        $this->assertEquals($attr['method'], 'GET');
-        $this->assertEquals($attr['name'], 'some_name');
-        $this->assertEquals($attr['class'], array('form-class'));
+        $this->assertEquals( $attr['action'], 'http://google.com' );
+        $this->assertEquals( $attr['method'], 'GET' );
+        $this->assertEquals( $attr['name'], 'some_name' );
+        $this->assertEquals( $attr['class'], array( 'form-class' ) );
 
     }
 
