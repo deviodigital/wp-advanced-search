@@ -1,5 +1,5 @@
 <?php
-add_action("init", function() {
+add_action( "init", function() {
     $form_id = 'default';
 
     $args             = array();
@@ -24,7 +24,7 @@ add_action("init", function() {
 
     $args['fields'][] = array(
         'type'  => 'submit',
-        'value' => 'Submit'
+        'value' => 'Submit',
     );
 
     register_wpas_form( $form_id, $args );
