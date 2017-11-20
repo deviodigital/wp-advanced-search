@@ -90,43 +90,43 @@ class TestInput extends \PHPUnit_Framework_TestCase {
 
     public function testBasicCheckbox() {
         $args = array( 'field_type' => 'meta_key', 'format' => 'checkbox', 'values' => array( 'one', 'two' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicRadio() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'checkbox', 'values' => array( 'one', 'two' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicInput() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'text', 'values' => array( 'somevalue' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicTextarea() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'textarea', 'values' => array( 'somevalue' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicSubmit() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'submit', 'values' => array( 'Submit' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicHTML() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'html', 'values' => array( '<h1>Some HTML</h1>' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
     public function testBasicHidden() {
         $args  = array( 'field_type' => 'meta_key', 'format' => 'hidden', 'values' => array( 'myvalue' ) );
-        $input = new Input( "myinput", $args );
+        $input = new Input( 'myinput', $args );
         $input->toHTML();
     }
 
