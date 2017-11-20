@@ -11,15 +11,15 @@ results appear when using AJAX.
    <?php while ( have_posts() ): the_post(); ?>
 
         <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-        <p><strong>Author:</strong> <?php the_author();?> &nbsp;&nbsp; <strong>Date:</strong> <?php the_date();?></p>
+        <p><strong><?php esc_html__( 'Author', 'wp-advanced-search' ); ?>:</strong> <?php the_author();?> &nbsp;&nbsp; <strong><?php esc_html__( 'Date', 'wp-advanced-search' ); ?>:</strong> <?php the_date();?></p>
         <?php the_excerpt(); ?>
-        <p><a href="<?php the_permalink(); ?>">Read more...</a></p>
+        <p><a href="<?php the_permalink(); ?>"><?php esc_html__( 'Read more...', 'wp-advanced-search' ); ?></a></p>
 
     <?php endwhile; ?>
 
 <?php else : ?>
 
-    <p>Sorry, no posts matched your criteria.</p>
+    <p><?php esc_html__( 'Sorry, no posts matched your criteria.', 'wp-advanced-search' ); ?></p>
 
 <?php endif; ?>
 

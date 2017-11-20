@@ -6,6 +6,7 @@ Version: 1.4.3
 Author: Sean Butze
 Author URI: http://seanbutze.com
 License: GPLv2 or later
+Text Domain: wp-advanced-search
 */
 
 $WPAS_FORMS = array();
