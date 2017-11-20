@@ -10,9 +10,9 @@ License: GPLv2 or later
 
 $WPAS_FORMS = array();
 
-require_once('lib.php');
-require_once('init.php');
-require_once('config/form.default.php');
+require_once( 'lib.php' );
+require_once( 'init.php' );
+require_once( 'config/form.default.php' );
 
 class WP_Advanced_Search {
     private $factory;
@@ -24,16 +24,16 @@ class WP_Advanced_Search {
     private $query;
     public $debug_level;
 
-    function __construct($id = '', $request = null) {
-        $this->errors = array();
-        $this->request = array();
-        $this->args = $this->get_form_args($id);
-        $this->args = $this->process_args($this->args);
-        $this->ajax = $this->args['form']['ajax'];
-        $this->debug = $this->args['debug'];
+    function __construct( $id = '', $request = null ) {
+        $this->errors      = array();
+        $this->request     = array();
+        $this->args        = $this->get_form_args( $id );
+        $this->args        = $this->process_args( $this->args );
+        $this->ajax        = $this->args['form']['ajax'];
+        $this->debug       = $this->args['debug'];
         $this->debug_level = $this->args['debug_level'];
-        $this->factory = new WPAS\Factory($this->args, $request);
-        $this->query = $this->factory->buildQueryObject();
+        $this->factory     = new WPAS\Factory( $this->args, $request );
+        $this->query       = $this->factory->buildQueryObject();
     }
 
     /**
@@ -42,18 +42,18 @@ class WP_Advanced_Search {
      * @param $id
      * @return array|mixed
      */
-    private function get_form_args($id) {
+    private function get_form_args( $id ) {
         global $WPAS_FORMS;
 
-        if (empty($WPAS_FORMS)) {
+        if ( empty( $WPAS_FORMS ) ) {
             $this->errors[] = "No forms have been configured.";
             return array();
         }
-        if (empty($id)) {
-            if (!empty($WPAS_FORMS['default'])) return $WPAS_FORMS['default'];
-            else return reset($WPAS_FORMS);
-        } else if (empty($WPAS_FORMS[$id])) {
-            $this->errors[] = "WPAS form with ID \"".$id."\" is not registered.";
+        if ( empty( $id ) ) {
+            if ( ! empty( $WPAS_FORMS['default'] ) ) return $WPAS_FORMS['default'];
+            else return reset( $WPAS_FORMS );
+        } else if ( empty( $WPAS_FORMS[$id] ) ) {
+            $this->errors[] = "WPAS form with ID \"" . $id . "\" is not registered.";
             return array();
         }
         return $WPAS_FORMS[$id];
@@ -64,8 +64,8 @@ class WP_Advanced_Search {
      */
     public function the_form() {
         $form = $this->factory->getForm();
-        if ($this->debug) $form->addClass('wpas-debug-enabled');
-        echo $form->toHTML();
+        if ( $this->debug ) $form->addClass( 'wpas-debug-enabled' );
+        echo esc_html( $form->toHTML() );
     }
 
     /**
@@ -74,7 +74,7 @@ class WP_Advanced_Search {
      * @return WP_Query
      */
     public function query() {
-        if (!$this->ajax_enabled()) $this->print_debug();
+        if ( ! $this->ajax_enabled() ) $this->print_debug();
         return $this->query;
     }
 
@@ -84,14 +84,14 @@ class WP_Advanced_Search {
      * @return string
      */
     function results_range( $args = array() ) {
-        return WPAS\Helper\ResultsRange::make($this->query, $args);
+        return WPAS\Helper\ResultsRange::make( $this->query, $args );
     }
 
     /**
      * Displays pagination links
      */
     public function pagination( $args = array() ) {
-        echo WPAS\Helper\Pagination::make($this->query, $args, $this->ajax_enabled());
+        echo WPAS\Helper\Pagination::make( $this->query, $args, $this->ajax_enabled() );
     }
 
     /**
@@ -107,8 +107,8 @@ class WP_Advanced_Search {
      * @return string
      */
     public function create_debug_output() {
-        $level = $this->debug_level;
-        $errors = $this->get_errors();
+        $level        = $this->debug_level;
+        $errors       = $this->get_errors();
         $wp_query_obj = $this->factory->getWPQuery();
 
 
@@ -118,36 +118,36 @@ class WP_Advanced_Search {
         $output .= "|| Errors\n";
         $output .= "------------------------------------\n";
 
-        if (empty($errors)) {
+        if ( empty( $errors ) ) {
             $output .= "No errors detected.\n";
         } else {
-            $output .= count($errors) . " errors detected:\n";
-            $output .= print_r($errors, true) . "\n";
+            $output .= count( $errors ) . " errors detected:\n";
+            $output .= print_r( $errors, true ) . "\n";
         }
 
         $output .= "------------------------------------\n";
         $output .= "|| WP_Query Arguments\n";
         $output .= "------------------------------------\n";
 
-        $output .= print_r($wp_query_obj->query, true) . "\n";
+        $output .= print_r( $wp_query_obj->query, true ) . "\n";
 
         $output .= "------------------------------------\n";
         $output .= "|| MySQL Query \n";
         $output .= "------------------------------------\n";
 
-        $output .= print_r($wp_query_obj->request, true) . "\n";
+        $output .= print_r( $wp_query_obj->request, true ) . "\n";
 
         $output .= "------------------------------------\n";
         $output .= "|| Request Data \n";
         $output .= "------------------------------------\n";
 
-        $output .= print_r($this->get_request(), true) . "\n";
+        $output .= print_r( $this->get_request(), true ) . "\n";
 
-        if ($level == 'verbose') {
+        if ( 'verbose' == $level ) {
             $output .= "------------------------------------\n";
             $output .= "|| WP_Query Object Dump\n";
             $output .= "------------------------------------\n";
-            $output .= print_r($wp_query_obj, true);
+            $output .= print_r( $wp_query_obj, true );
         }
 
         return $output;
@@ -157,9 +157,9 @@ class WP_Advanced_Search {
      * Print debug information
      */
     public function print_debug() {
-        if ($this->debug === false) return;
+        if ( false === $this->debug ) return;
         $output = $this->create_debug_output();
-        echo '<pre>' . $output . '</pre>';
+        echo '<pre>' . esc_html( $output ) . '</pre>';
     }
 
     /**
@@ -177,13 +177,13 @@ class WP_Advanced_Search {
      */
     public function get_errors() {
         $errors = $this->errors;
-        if (is_object($this->factory)) {
-            $errors = array_merge($this->errors, $this->factory->getErrors());
+        if (is_object( $this->factory ) ) {
+            $errors = array_merge( $this->errors, $this->factory->getErrors() );
         }
         return $errors;
     }
 
-    public function set_error($err_msg) {
+    public function set_error( $err_msg ) {
         $this->errors[] = $err_msg;
     }
 
@@ -211,47 +211,46 @@ class WP_Advanced_Search {
      * @param $args
      * @return mixed
      */
-    private function process_args($args) {
+    private function process_args( $args ) {
         // Establish AJAX configuration
-        $args = $this->set_ajax_config($args);
+        $args = $this->set_ajax_config( $args );
 
         // Set debug mode and debug level
-        $args = $this->set_debug_args($args);
+        $args = $this->set_debug_args( $args );
 
         return $args;
     }
 
-    private function set_ajax_config($args) {
+    private function set_ajax_config( $args ) {
         $ajax_args = array();
 
-        if (!isset($args['form'])) $args['form'] = array();
+        if ( ! isset($args['form'] ) ) $args['form'] = array();
 
-        if (isset($args['form']['ajax'])) {
+        if ( isset( $args['form']['ajax'] ) ) {
             $ajax_args = $args['form']['ajax'];
         }
-        $args['form']['ajax'] = new WPAS\AjaxConfig($ajax_args);
+        $args['form']['ajax'] = new WPAS\AjaxConfig( $ajax_args );
 
         return $args;
     }
 
-    private function set_debug_args($args)
-    {
+    private function set_debug_args( $args ) {
         $debug = false;
-        if (defined('WPAS_DEBUG') && WPAS_DEBUG) {
+        if ( defined( 'WPAS_DEBUG' ) && WPAS_DEBUG ) {
             $debug = true;
-        } else if (!empty($args['debug']) && $args['debug']) {
+        } else if ( ! empty( $args['debug'] ) && $args['debug'] ) {
             $debug = true;
         }
 
         $debug_level = 'log';
 
-        if (defined('WPAS_DEBUG_LEVEL') && WPAS_DEBUG_LEVEL) {
+        if ( defined( 'WPAS_DEBUG_LEVEL' ) && WPAS_DEBUG_LEVEL ) {
             $debug_level = WPAS_DEBUG_LEVEL;
-        } else if (!empty($args['debug_level']) && $args['debug_level']) {
+        } elseif ( ! empty( $args['debug_level'] ) && $args['debug_level'] ) {
             $debug_level = $args['debug_level'];
         }
 
-        $args['debug'] = $debug;
+        $args['debug']       = $debug;
         $args['debug_level'] = $debug_level;
 
         return $args;
